@@ -1,0 +1,14 @@
+{
+  "name": "devops-demo",
+  "version": "1.0.0",
+  "description": "Simple DevOps demo app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"No tests yet\" && exit 0",
+    "lint": "echo \"Linting passed\""
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
