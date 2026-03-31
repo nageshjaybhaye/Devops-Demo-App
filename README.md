@@ -1,71 +1,164 @@
-# DevOps Demo Application
+# 🚀 AWS CI/CD Project – Node.js App Deployment
 
-A modern containerized Node.js application with CI/CD pipeline.
+## 📌 Project Overview
+This project demonstrates how to deploy a Node.js web application on AWS EC2 and implement a CI/CD pipeline using GitHub Actions for automated deployment.
 
-## Prerequisites
+The application is automatically updated on the server whenever new code is pushed to the GitHub repository.
 
-- Docker
-- Docker Compose (optional)
+---
 
-## Running with Docker
+## 🎯 Objectives
+- Deploy a Node.js application on AWS EC2  
+- Configure secure SSH access  
+- Automate deployment using CI/CD  
 
-### Build the image
+---
+
+## 🛠️ Tech Stack
+- **Cloud:** AWS EC2  
+- **Backend:** Node.js, Express  
+- **CI/CD:** GitHub Actions  
+- **Version Control:** Git, GitHub  
+- **OS:** Amazon Linux  
+
+---
+
+## ⚙️ Architecture
+```
+Developer → GitHub → GitHub Actions → EC2 → Live App
+```
+
+---
+
+## 🚀 Features
+- Publicly accessible Node.js web application  
+- Automated deployment using GitHub Actions  
+- Secure SSH-based server connection  
+- Real-time updates on every push  
+
+---
+
+## 📂 Project Structure
+```
+cloud-cicd-project/
+│
+├── app.js
+├── package.json
+├── package-lock.json
+├── .gitignore
+├── Screenshots/
+└── .github/
+    └── workflows/
+        └── deploy.yml
+```
+
+---
+
+## 🔐 Setup & Deployment Steps
+
+### 1. Launch EC2 Instance
+- Instance Type: t3.micro  
+- OS: Amazon Linux 2023  
+- Configure Security Group:
+  - Port 22 (SSH)  
+  - Port 3000 (App access)  
+
+### 2. Connect via SSH
 ```bash
-docker build -t devops-demo .
+ssh -i your-key.pem ec2-user@your-public-ip
 ```
 
-### Run the container
+### 3. Clone Repository
 ```bash
-docker run -d -p 3000:3000 --name devops-demo devops-demo
+git clone https://github.com/sathyamurugesan0546-gif/cloud-cicd-project.git
+cd cloud-cicd-project
 ```
 
-### View logs
+### 4. Install Dependencies
 ```bash
-docker logs devops-demo
+npm install
 ```
 
-### Stop the container
+### 5. Run App with PM2
 ```bash
-docker stop devops-demo
+sudo npm install -g pm2
+pm2 start app.js
+pm2 save
+pm2 startup
 ```
 
-### Remove the container
-```bash
-docker rm devops-demo
+---
+
+## 🔄 CI/CD Pipeline Setup
+
+### GitHub Actions Workflow
+```yaml
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd cloud-cicd-project
+            git pull
+            npm install
 ```
 
-## Running with Docker Compose
+---
 
-### Start the application
-```bash
-docker-compose up -d
-```
+## 🔑 GitHub Secrets
 
-### View logs
-```bash
-docker-compose logs -f
-```
+| Name       | Description                  |
+|------------|------------------------------|
+| EC2_HOST   | Public IP of EC2            |
+| EC2_KEY    | Private SSH key (.pem)      |
 
-### Stop the application
-```bash
-docker-compose down
-```
+---
 
-### Rebuild and restart
-```bash
-docker-compose up -d --build
-```
+## 🌐 Live Application
+👉 http://13.239.116.205:3000
 
-## Access the Application
+---
 
-Open your browser and navigate to:
-```
-http://localhost:3000
-```
+## 📸 Screenshots
+- Local Setup  
+- EC2 Instance Creation  
+- SSH Connection  
+- App Running on EC2  
+- CI/CD Pipeline Success  
 
-## Tech Stack
+---
 
-- Node.js 18
-- Express.js
-- Docker
-- GitHub Actions
+## 📚 Key Learnings
+- EC2 provisioning and management  
+- SSH authentication and security groups  
+- CI/CD pipeline automation  
+- Process management using PM2  
+- Real-world DevOps workflow  
+
+---
+
+## 🚀 Future Improvements
+- Add Nginx reverse proxy  
+- Configure HTTPS with SSL  
+- Dockerize application  
+- Implement monitoring (CloudWatch)  
+- Add custom domain  
+
+---
+
+## 👨‍💻 Author
+**Nagesh Jaybhaye**
