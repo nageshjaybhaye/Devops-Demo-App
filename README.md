@@ -7,6 +7,9 @@ The application is automatically updated on the server whenever new code is push
 
 ---
 
+## 🔄 Running Application : 
+![App](devopsdemo.jpg)
+
 ## 🎯 Objectives
 - Deploy a Node.js application on AWS EC2  
 - Configure secure SSH access  
